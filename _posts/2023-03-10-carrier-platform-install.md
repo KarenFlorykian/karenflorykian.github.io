@@ -6,6 +6,13 @@ date:   2023-04-10 05:05:05
 tags: [hardware,nfr, performance]
 description: 'lorem ipsum'
 categories: [arcade]
+
+title: Carrier Installation
+author: karen
+date: 2023-04-08 12:00:00 +0100
+categories: [Blogging, Tutorial]
+tags: [system requirements, hardware, installation]
+render_with_liquid: false
 ---
 
 
@@ -29,6 +36,27 @@ categories: [arcade]
     * ssh - 22
     * tcp - 3100, 5672, 8086
 - all daily updates that might trigger docker restart or termination should be disabled
+
+
+## Videos
+
+You can embed a video with the following syntax:
+
+```liquid
+{% include embed/{Platform}.html id='{ID}' %}
+```
+Where `Platform` is the lowercase of the platform name, and `ID` is the video ID.
+
+The following table shows how to get the two parameters we need in a given video URL, and you can also know the currently supported video platforms.
+
+| Video URL                                                                                          | Platform  | ID            |
+|----------------------------------------------------------------------------------------------------|-----------|:--------------|
+| [https://www.**youtube**.com/watch?v=**H-B46URT4mg**](https://www.youtube.com/watch?v=H-B46URT4mg) | `youtube` | `H-B46URT4mg` |
+| [https://www.**twitch**.tv/videos/**1634779211**](https://www.twitch.tv/videos/1634779211)         | `twitch`  | `1634779211`  |
+
+
+
+
 
 ### Ubuntu
 - Check if you have any daily services enabled using the following command:
