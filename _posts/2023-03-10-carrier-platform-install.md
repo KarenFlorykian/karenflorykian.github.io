@@ -1,12 +1,4 @@
 ---
-layout: post
-title:  "Carrier Installation"
-image: ''
-date:   2023-04-10 05:05:05
-tags: [hardware,nfr, performance]
-description: 'lorem ipsum'
-categories: [arcade]
-
 title: Carrier Installation
 author: karen
 date: 2023-04-08 12:00:00 +0100
