@@ -1,6 +1,6 @@
 ---
 title: platform_temp
-author: cotes
+author: Karen
 date: 2022-09-09 14:10:00 +0800
 categories: [Blogging, Tutorial]
 tags: [writing]
@@ -39,7 +39,7 @@ This tutorial will guide you how to write a post in the _Chirpy_ template, and i
 |--------------|-----------------------------------------------------------------------------------------------------------------------|
 | Ubuntu       | Check if you have any daily services enabled using the following command:                                          |
 |              | `$ sudo systemctl list-timers`                                                                                          |
-|              | ![img-description](https://karenflorykian.github.io/){: w="700" h="400" }                                                                                                                      |
+|              | ![img-description](https://karenflorykian.github.io/asssets/ubuntu_inst.png)                                                      |
 |              | The following services should be stopped/disabled: `apt-daily-upgrade.service`, `apt-daily.service`                    |
 |              |                                                                                                                       |
 |              | `$ sudo systemctl stop apt-daily-upgrade.timer`                                                                          |
@@ -128,89 +128,91 @@ $ sudo dnf install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 ```
 
 
-3.	Install docker-compose
-
-Ubuntu	apt install docker-compose
-
-Debian	apt install docker-compose
-
-Centos	Check the current release by the link https://github.com/docker/compose/releases and if necessary, update it in the command below:
-
-sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-
-sudo chmod +x /usr/local/bin/docker-compose
-
-Create a symbolic link for docker-compose in /usr/bin/docker-compose file:
-sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-
-Fedora	Check the current release by the link https://github.com/docker/compose/releases and if necessary, update it in the command below:
-
-sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-
-sudo chmod +x /usr/local/bin/docker-compose
-
-Create a symbolic link for docker-compose in /usr/bin/docker-compose file:
-   sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+3.	| Distribution | Command |
+| --- | --- |
+| Ubuntu | `apt install docker-compose` |
+| Debian | `apt install docker-compose` |
+| Centos | `sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose` <br> `sudo chmod +x /usr/local/bin/docker-compose` <br> `sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose` |
+| Fedora | `sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose` <br> `sudo chmod +x /usr/local/bin/docker-compose` <br> `sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose` |
 
 
-4.	If hardware drive is not root drive, then mount disk to /opt directory.
-4.1. 
-•	Get the list of all available partitions on your system with the following command:
-fdisk -l
-Imagine partition name you should mount for Carrier usage is /dev/nvme1n1.
-• Make a new file system:
- mkfs -t ext4 /dev/nvme1n1
-• Add information about new filesystem in file system table by editing /etc/fstab:
-vi /etc/fstab
-Add the following line in the end of the file: 
-/dev/nvme1n1    /opt   ext4    defaults     0        2
-• Mount required file system to existent /opt directory:
-mount /dev/nvme1n1 /opt
+4. If hardware drive is not root drive, then mount disk to /opt directory.
 
-4.2. Mount docker to /opt folder
-cd /opt
-mkdir docker
-service docker stop
-mount --rbind /opt/docker /var/lib/docker
-service docker start
+4.1. Get the list of all available partitions on your system with the following command:
+
+    ```
+    fdisk -l
+    ```
+    
+    Imagine partition name you should mount for Carrier usage is `/dev/nvme1n1`.
+    
+    Make a new file system:
+    
+    ```
+    mkfs -t ext4 /dev/nvme1n1
+    ```
+    
+    Add information about new filesystem in file system table by editing `/etc/fstab`:
+    
+    ```
+    vi /etc/fstab
+    ```
+    
+    Add the following line in the end of the file:
+    
+    ```
+    /dev/nvme1n1    /opt   ext4    defaults     0        2
+    ```
+    
+    Mount required file system to existent `/opt` directory:
+    
+    ```
+    mount /dev/nvme1n1 /opt
+    ```
+    
+4.2. Mount docker to `/opt` folder:
+
+    ```
+    cd /opt
+    mkdir docker
+    service docker stop
+    mount --rbind /opt/docker /var/lib/docker
+    service docker start
+    ```
+
 
 5.	Install Git
 
 Check if Git is installed using the following command:
-git --version
+`git --version`
 
 Otherwise install it:
 
-Ubuntu	sudo apt install git
-Debian	sudo apt install git
-Centos	sudo yum install git
-Fedora	sudo dnf install git
+| Distro | Command |
+|--------|---------|
+| Ubuntu | `sudo apt install git` |
+| Debian | `sudo apt install git` |
+| Centos | `sudo yum install git` |
+| Fedora | `sudo dnf install git` |
+
 
 6.	Clone carrier-io centry repository to /opt directory.
+```bash
 cd /opt
 git clone https://github.com/carrier-io/centry.git
-
+```
 7.	Switch to next branch in century repository.
 cd centry
 git checkout next
 
 8.	Get public IP of your system and set CURRENT_IP variable to defined value:
 
-Ubuntu	CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com | grep 'address ' | cut -d ' ' -f 4)
-
-Debian	CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com | grep 'address ' | cut -d ' ' -f 4)
-
-Centos	Install host utility:
-yum install bind-utils
-
-Get IP and assign its value to CURRENT_IP variable:
-CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com | grep 'address ' | cut -d ' ' -f 4)
-
-Fedora	Install host utility:
-dnf install bind-utils
-
-Get IP and assign its value to CURRENT_IP variable:
-CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com | grep 'address ' | cut -d ' ' -f 4)
+U| Distribution | Command |
+|--------------|---------|
+| Ubuntu | `CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com | grep 'address ' | cut -d ' ' -f 4)` |
+| Debian | `CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com | grep 'address ' | cut -d ' ' -f 4)` |
+| Centos | `yum install bind-utils`<br><br>`CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com | grep 'address ' | cut -d ' ' -f 4)` |
+| Fedora | `dnf install bind-utils`<br><br>`CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com | grep 'address ' | cut -d ' ' -f 4)` |
 
 
 9.	In .env file change DEV_IP to CURRENT_IP:
