@@ -8,8 +8,7 @@ render_with_liquid: false
 ---
 
 
-# Hardware requirements:
-## OS: Ubuntu, Debian, Centos, Fedora
+## Hardware requirements:
 ### Carrier instance requirements:
 - 4 cpu (and more)
 - 16 GB RAM (and more)
@@ -51,53 +50,33 @@ render_with_liquid: false
 | Distribution | Instructions                                                                                                          |
 |--------------|-----------------------------------------------------------------------------------------------------------------------|
 | Ubuntu       | Check if you have any daily services enabled using the following command:                                          |
-|              | `sudo systemctl list-timers`                                                                                          |
-|              |                                                                                                                       |
+|              | `$ sudo systemctl list-timers`                                                                                          |
+|              | ![img-description](https://karenflorykian.github.io/){: w="700" h="400" }                                                                                                                      |
 |              | The following services should be stopped/disabled: `apt-daily-upgrade.service`, `apt-daily.service`                    |
 |              |                                                                                                                       |
-|              | `sudo systemctl stop apt-daily-upgrade.timer`                                                                          |
-|              | `sudo systemctl disable apt-daily-upgrade.timer`                                                                       |
-|              | `sudo systemctl stop apt-daily.timer`                                                                                  |
-|              | `sudo systemctl disable apt-daily.timer`                                                                               |
-|              | `sudo systemctl daemon-reload`                                                                                         |
+|              | `$ sudo systemctl stop apt-daily-upgrade.timer`                                                                          |
+|              | `$ sudo systemctl disable apt-daily-upgrade.timer`                                                                       |
+|              | `$ sudo systemctl stop apt-daily.timer`                                                                                  |
+|              | `$ sudo systemctl disable apt-daily.timer`                                                                               |
+|              | `$ sudo systemctl daemon-reload`                                                                                         |
 |              |                                                                                                                       |
 |              | After disabling ensure that disabled services are not running anymore using the following command:                    |
-|              | `sudo systemctl list-timers`                                                                                          |
+|              | `$ sudo systemctl list-timers`                                                                                          |
 | Debian       | The same as Ubuntu                                                                                                    |
 | Centos       | In the default Centos image, there shouldn't be any timer services enabled, but better to ensure using the command: |
-|              | `sudo systemctl list-timers`                                                                                          |
+|              | `$ sudo systemctl list-timers`                                                                                          |
 |              |                                                                                                                       |
 |              | Disable timer services if required:                                                                                    |
-|              | `sudo systemctl stop $service_name`                                                                                    |
-|              | `sudo systemctl disable $service_name`                                                                                 |
-|              | `sudo systemctl daemon-reload`                                                                                         |
+|              | `$ sudo systemctl stop $service_name`                                                                                    |
+|              | `$ sudo systemctl disable $service_name`                                                                                 |
+|              | `$ sudo systemctl daemon-reload`                                                                                         |
 | Fedora       | In the default Fedora image, there shouldn't be any timer services enabled, but better to ensure using the command: |
-|              | `sudo systemctl list-timers`                                                                                          |
+|              | `$ sudo systemctl list-timers`                                                                                          |
 |              |                                                                                                                       |
 |              | Disable timer services if required:                                                                                    |
-|              | `sudo systemctl stop $service_name`                                                                                    |
-|              | `sudo systemctl disable $service_name`                                                                                 |
-|              | `sudo systemctl daemon-reload`                                                                                         |
-
-
-## Videos
-
-You can embed a video with the following syntax:
-
-```liquid
-{% include embed/{Platform}.html id='{ID}' %}
-```
-Where `Platform` is the lowercase of the platform name, and `ID` is the video ID.
-
-The following table shows how to get the two parameters we need in a given video URL, and you can also know the currently supported video platforms.
-
-| Video URL                                                                                          | Platform  | ID            |
-|----------------------------------------------------------------------------------------------------|-----------|:--------------|
-| [https://www.**youtube**.com/watch?v=**H-B46URT4mg**](https://www.youtube.com/watch?v=H-B46URT4mg) | `youtube` | `H-B46URT4mg` |
-| [https://www.**twitch**.tv/videos/**1634779211**](https://www.twitch.tv/videos/1634779211)         | `twitch`  | `1634779211`  |
-
-
-
+|              | `$ sudo systemctl stop $service_name`                                                                                    |
+|              | `$ sudo systemctl disable $service_name`                                                                                 |
+|              | `$ sudo systemctl daemon-reload`                                                                                         |
 
 
 ### Ubuntu
@@ -119,41 +98,6 @@ $ sudo systemctl disable apt-daily-upgrade.timer
 $ sudo systemctl stop apt-daily.timer
 $ sudo systemctl disable apt-daily.timer
 $ sudo systemctl daemon-reload 
-```
-
-After disabling ensure that disabled services are not running anymore using the following command:
-sudo systemctl list-timers
-
- 
-
-### Debian	
-The same as Ubuntu
-
-### Centos	
-In default Centos image there shouldn’t any timer services enabled but better to ensure in the state of currently active timers if they are using the following command:
-sudo systemctl list-timers
-
- 
-
-Disable timer services if required:
-```bash
-sudo systemctl stop $service_name
-sudo systemctl disable $service_name
-sudo systemctl daemon-reload 
-```
-
-###  Fedora	
-In default Fedora image there shouldn’t any timer services enabled but better to ensure in the state of currently active timers if they are using the following command:
-```bash
-sudo systemctl list-timers
-```
-
- 
-Disable timer services if required:
-```bash
-sudo systemctl stop $service_name
-sudo systemctl disable $service_name
-sudo systemctl daemon-reload 
 ```
 
 ## Procedure
