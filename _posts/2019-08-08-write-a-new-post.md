@@ -9,385 +9,29 @@ render_with_liquid: false
 
 This tutorial will guide you how to write a post in the _Chirpy_ template, and it's worth reading even if you've used Jekyll before, as many features require specific variables to be set.
 
-## Naming and Path
 
-Create a new file named `YYYY-MM-DD-TITLE.EXTENSION`{: .filepath} and put it in the `_posts`{: .filepath} of the root directory. Please note that the `EXTENSION`{: .filepath} must be one of `md`{: .filepath} and `markdown`{: .filepath}. If you want to save time of creating files, please consider using the plugin [`Jekyll-Compose`](https://github.com/jekyll/jekyll-compose) to accomplish this.
 
-## Front Matter
+# Hardware requirements:
+## OS: Ubuntu, Debian, Centos, Fedora
+### Carrier instance requirements:
+- 4 cpu (and more)
+- 16 GB RAM (and more)
+- 100-500GB SSD (root drive or mounted drive)
+    * Mounted drive is better option as it gives possibility to move carrier data to other instance or not lose data in case if instance is terminated accidentally.
+- Static IP or public DNS
+
+### Load generator:
+- 2 cpu (and more)
+- 8 GB ram (and more)
+
+## Prerequisites
+- instance launched in accordance with hardware requirements with root permissions
+- the following inbound ports are open (security group for cloud):
+    * http – 80
+    * ssh - 22
+    * tcp - 3100, 5672, 8086
+- all daily updates that might trigger docker restart or termination should be disabled
 
-Basically, you need to fill the [Front Matter](https://jekyllrb.com/docs/front-matter/) as below at the top of the post:
-
-```yaml
----
-title: TITLE
-date: YYYY-MM-DD HH:MM:SS +/-TTTT
-categories: [TOP_CATEGORIE, SUB_CATEGORIE]
-tags: [TAG]     # TAG names should always be lowercase
----
-```
-
-> The posts' _layout_ has been set to `post` by default, so there is no need to add the variable _layout_ in the Front Matter block.
-{: .prompt-tip }
-
-### Timezone of Date
-
-In order to accurately record the release date of a post, you should not only set up the `timezone` of `_config.yml`{: .filepath} but also provide the post's timezone in variable `date` of its Front Matter block. Format: `+/-TTTT`, e.g. `+0800`.
-
-### Categories and Tags
-
-The `categories` of each post are designed to contain up to two elements, and the number of elements in `tags` can be zero to infinity. For instance:
-
-```yaml
----
-categories: [Animal, Insect]
-tags: [bee]
----
-```
-
-### Author Information
-
-The author information of the post usually does not need to be filled in the _Front Matter_ , they will be obtained from variables `social.name` and the first entry of `social.links` of the configuration file by default. But you can also override it as follows:
-
-Adding author information in `_data/authors.yml` (If your website doesn't have this file, don't hesitate to create one).
-
-```yaml
-<author_id>:
-  name: <full name>
-  twitter: <twitter_of_author>
-  url: <homepage_of_author>
-```
-{: file="_data/authors.yml" }
-
-
-And then use `author` to specify a single entry or `authors` to specify multiple entries:
-
-```yaml
----
-author: <author_id>                     # for single entry
-# or
-authors: [<author1_id>, <author2_id>]   # for multiple entries
----
-```
-
-
-Having said that, the key `author` can also identify multiple entries.
-
-> The benefit of reading the author information from the file `_data/authors.yml`{: .filepath } is that the page will have the meta tag `twitter:creator`, which enriches the [Twitter Cards](https://developer.twitter.com/en/docs/twitter-for-websites/cards/guides/getting-started#card-and-content-attribution) and is good for SEO.
-{: .prompt-info }
-
-## Table of Contents
-
-By default, the **T**able **o**f **C**ontents (TOC) is displayed on the right panel of the post. If you want to turn it off globally, go to `_config.yml`{: .filepath} and set the value of variable `toc` to `false`. If you want to turn off TOC for a specific post, add the following to the post's [Front Matter](https://jekyllrb.com/docs/front-matter/):
-
-```yaml
----
-toc: false
----
-```
-
-## Comments
-
-The global switch of comments is defined by variable `comments.active` in the file `_config.yml`{: .filepath}. After selecting a comment system for this variable, comments will be turned on for all posts.
-
-If you want to close the comment for a specific post, add the following to the **Front Matter** of the post:
-
-```yaml
----
-comments: false
----
-```
-
-## Mathematics
-
-For website performance reasons, the mathematical feature won't be loaded by default. But it can be enabled by:
-
-```yaml
----
-math: true
----
-```
-
-## Mermaid
-
-[**Mermaid**](https://github.com/mermaid-js/mermaid) is a great diagrams generation tool. To enable it on your post, add the following to the YAML block:
-
-```yaml
----
-mermaid: true
----
-```
-
-Then you can use it like other markdown languages: surround the graph code with ```` ```mermaid ```` and ```` ``` ````.
-
-## Images
-
-### Caption
-
-Add italics to the next line of an image，then it will become the caption and appear at the bottom of the image:
-
-```markdown
-![img-description](/path/to/image)
-_Image Caption_
-```
-{: .nolineno}
-
-### Size
-
-In order to prevent the page content layout from shifting when the image is loaded, we should set the width and height for each image.
-
-```markdown
-![Desktop View](/assets/img/sample/mockup.png){: width="700" height="400" }
-```
-{: .nolineno}
-
-> For an SVG, you have to at least specify its _width_, otherwise it won't be rendered.
-{: .prompt-info }
-
-Starting from _Chirpy v5.0.0_, `height` and `width` support abbreviations (`height` → `h`, `width` → `w`). The following example has the same effect as the above:
-
-```markdown
-![Desktop View](/assets/img/sample/mockup.png){: w="700" h="400" }
-```
-{: .nolineno}
-
-### Position
-
-By default, the image is centered, but you can specify the position by using one of the classes `normal`, `left`, and `right`.
-
-> Once the position is specified, the image caption should not be added.
-{: .prompt-warning }
-
-- **Normal position**
-
-  Image will be left aligned in below sample:
-
-  ```markdown
-  ![Desktop View](/assets/img/sample/mockup.png){: .normal }
-  ```
-  {: .nolineno}
-
-- **Float to the left**
-
-  ```markdown
-  ![Desktop View](/assets/img/sample/mockup.png){: .left }
-  ```
-  {: .nolineno}
-
-- **Float to the right**
-
-  ```markdown
-  ![Desktop View](/assets/img/sample/mockup.png){: .right }
-  ```
-  {: .nolineno}
-
-### Dark/Light mode
-
-You can make images follow theme preferences in dark/light mode. This requires you to prepare two images, one for dark mode and one for light mode, and then assign them a specific class (`dark` or `light`):
-
-```markdown
-![Light mode only](/path/to/light-mode.png){: .light }
-![Dark mode only](/path/to/dark-mode.png){: .dark }
-```
-
-### Shadow
-
-The screenshots of the program window can be considered to show the shadow effect:
-
-```markdown
-![Desktop View](/assets/img/sample/mockup.png){: .shadow }
-```
-{: .nolineno}
-
-### CDN URL
-
-If you host the images on the CDN, you can save the time of repeatedly writing the CDN URL by assigning the variable `img_cdn` of `_config.yml`{: .filepath} file:
-
-```yaml
-img_cdn: https://cdn.com
-```
-{: file='_config.yml' .nolineno}
-
-Once `img_cdn` is assigned, the CDN URL will be added to the path of all images (images of site avatar and posts) starting with `/`.
-
-For instance, when using images:
-
-```markdown
-![The flower](/path/to/flower.png)
-```
-{: .nolineno}
-
-The parsing result will automatically add the CDN prefix `https://cdn.com` before the image path:
-
-```html
-<img src="https://cdn.com/path/to/flower.png" alt="The flower">
-```
-{: .nolineno }
-
-### Image Path
-
-When a post contains many images, it will be a time-consuming task to repeatedly define the path of the images. To solve this, we can define this path in the YAML block of the post:
-
-```yml
----
-img_path: /img/path/
----
-```
-
-And then, the image source of Markdown can write the file name directly:
-
-```md
-![The flower](flower.png)
-```
-{: .nolineno }
-
-The output will be:
-
-```html
-<img src="/img/path/flower.png" alt="The flower">
-```
-{: .nolineno }
-
-### Preview Image
-
-If you want to add an image at the top of the post, please provide an image with a resolution of `1200 x 630`. Please note that if the image aspect ratio does not meet `1.91 : 1`, the image will be scaled and cropped.
-
-Knowing these prerequisites, you can start setting the image's attribute:
-
-```yaml
----
-image:
-  path: /path/to/image
-  alt: image alternative text
----
-```
-
-Note that the [`img_path`](#image-path) can also be passed to the preview image, that is, when it has been set, the  attribute `path` only needs the image file name.
-
-For simple use, you can also just use `image` to define the path.
-
-```yml
----
-image: /path/to/image
----
-```
-
-### LQIP
-
-For preview images:
-
-```yaml
----
-image:
-  lqip: /path/to/lqip-file # or base64 URI
----
-```
-
-> You can observe LQIP in the preview image of post [_Text and Typography_](/posts/text-and-typography/).
-
-
-For normal images:
-
-```markdown
-![Image description](/path/to/image){: lqip="/path/to/lqip-file" }
-```
-{: .nolineno }
-
-## Pinned Posts
-
-You can pin one or more posts to the top of the home page, and the fixed posts are sorted in reverse order according to their release date. Enable by:
-
-```yaml
----
-pin: true
----
-```
-
-## Prompts
-
-There are several types of prompts: `tip`, `info`, `warning`, and `danger`. They can be generated by adding the class `prompt-{type}` to the blockquote. For example, define a prompt of type `info` as follows:
-
-```md
-> Example line for prompt.
-{: .prompt-info }
-```
-{: .nolineno }
-
-## Syntax
-
-### Inline Code
-
-```md
-`inline code part`
-```
-{: .nolineno }
-
-### Filepath Hightlight
-
-```md
-`/path/to/a/file.extend`{: .filepath}
-```
-{: .nolineno }
-
-### Code Block
-
-Markdown symbols ```` ``` ```` can easily create a code block as follows:
-
-````md
-```
-This is a plaintext code snippet.
-```
-````
-
-#### Specifying Language
-
-Using ```` ```{language} ```` you will get a code block with syntax highlight:
-
-````markdown
-```yaml
-key: value
-```
-````
-
-> The Jekyll tag `{% highlight %}` is not compatible with this theme.
-{: .prompt-danger }
-
-#### Line Number
-
-By default, all languages except `plaintext`, `console`, and `terminal` will display line numbers. When you want to hide the line number of a code block, add the class `nolineno` to it:
-
-````markdown
-```shell
-echo 'No more line numbers!'
-```
-{: .nolineno }
-````
-
-#### Specifying the Filename
-
-You may have noticed that the code language will be displayed at the top of the code block. If you want to replace it with the file name, you can add the attribute `file` to achieve this:
-
-````markdown
-```shell
-# content
-```
-{: file="path/to/file" }
-````
-
-#### Liquid Codes
-
-If you want to display the **Liquid** snippet, surround the liquid code with `{% raw %}` and `{% endraw %}`:
-
-````markdown
-{% raw %}
-```liquid
-{% if product.title contains 'Pack' %}
-  This product's title contains the word Pack.
-{% endif %}
-```
-{% endraw %}
-````
-
-Or adding `render_with_liquid: false` (Requires Jekyll 4.0 or higher) to the post's YAML block.
 
 ## Videos
 
@@ -405,6 +49,142 @@ The following table shows how to get the two parameters we need in a given video
 | [https://www.**youtube**.com/watch?v=**H-B46URT4mg**](https://www.youtube.com/watch?v=H-B46URT4mg) | `youtube` | `H-B46URT4mg` |
 | [https://www.**twitch**.tv/videos/**1634779211**](https://www.twitch.tv/videos/1634779211)         | `twitch`  | `1634779211`  |
 
+
+
+
+
+### Ubuntu
+- Check if you have any daily services enabled using the following command:
+
+```bash
+$ sudo systemctl list-timers
+```
+
+The following services should be stopped/disabled: apt-daily-upgrade.service, apt-daily.service
+
+
+The following services should be stopped/disabled: apt-daily-upgrade.service, apt-daily.service
+
+
+```bash
+$ sudo systemctl stop apt-daily-upgrade.timer
+$ sudo systemctl disable apt-daily-upgrade.timer
+$ sudo systemctl stop apt-daily.timer
+$ sudo systemctl disable apt-daily.timer
+$ sudo systemctl daemon-reload 
+```
+
+After disabling ensure that disabled services are not running anymore using the following command:
+sudo systemctl list-timers
+
+ 
+
+### Debian	
+The same as Ubuntu
+
+### Centos	
+In default Centos image there shouldn’t any timer services enabled but better to ensure in the state of currently active timers if they are using the following command:
+sudo systemctl list-timers
+
+ 
+
+Disable timer services if required:
+```bash
+sudo systemctl stop $service_name
+sudo systemctl disable $service_name
+sudo systemctl daemon-reload 
+```
+
+###  Fedora	
+In default Fedora image there shouldn’t any timer services enabled but better to ensure in the state of currently active timers if they are using the following command:
+```bash
+sudo systemctl list-timers
+```
+
+ 
+Disable timer services if required:
+```bash
+sudo systemctl stop $service_name
+sudo systemctl disable $service_name
+sudo systemctl daemon-reload 
+```
+
+## Procedure
+Installation guide demonstrates installation process for Ubuntu OS (latest version).
+1.	Switch to a root user
+```bash
+sudo su
+```
+2.	Install docker
+
+Ubuntu	apt update
+```bash
+apt install docker.io -y
+```
+Debian	apt update
+```bash
+apt install docker.io -y
+```
+
+Centos	sudo yum install -y yum-utils
+```bash
+sudo yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+
+sudo yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+Fedora	
+
+```bash
+$ sudo dnf -y install dnf-plugins-core
+
+$ sudo dnf config-manager \
+--add-repo \
+https://download.docker.com/linux/fedora/docker-ce.repo
+
+
+$ sudo dnf install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+```
+
+
+3.	Install docker-compose
+
+Ubuntu	apt install docker-compose
+
+Debian	apt install docker-compose
+
+Centos	Check the current release by the link https://github.com/docker/compose/releases and if necessary, update it in the command below:
+
+sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+sudo chmod +x /usr/local/bin/docker-compose
+
+Create a symbolic link for docker-compose in /usr/bin/docker-compose file:
+sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+Fedora	Check the current release by the link https://github.com/docker/compose/releases and if necessary, update it in the command below:
+
+sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+sudo chmod +x /usr/local/bin/docker-compose
+
+Create a symbolic link for docker-compose in /usr/bin/docker-compose file:
+   sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+
+4.	If hardware drive is not root drive, then mount disk to /opt directory.
+4.1. 
+•	Get the list of all available partitions on your system with the following command:
+fdisk -l
+Imagine partition name you should mount for Carrier usage is /dev/nvme1n1.
+• Make a new file system:
+ mkfs -t ext4 /dev/nvme1n1
+• Add information about new filesystem in file system table by editing /etc/fstab:
+vi /etc/fstab
+Add the following line in the end of the file: 
+/dev/nvme1n1    /opt   ext4    defaults     0        2
+• Mount required file system to existent /opt directory:
 
 
 ## Learn More
