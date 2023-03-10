@@ -39,7 +39,7 @@ This tutorial will guide you how to write a post in the _Chirpy_ template, and i
 |--------------|-----------------------------------------------------------------------------------------------------------------------|
 | Ubuntu       | Check if you have any daily services enabled using the following command:                                          |
 |              | `$ sudo systemctl list-timers`                                                                                          |
-|              | ![img-description](https://karenflorykian.github.io/assets/ubuntu_inst.png)                                                      |
+|              | ![img-description](https://karenflorykian.github.io/assets/img/ubuntu_inst.png)                                                      |
 |              | The following services should be stopped/disabled: `apt-daily-upgrade.service`, `apt-daily.service`                    |
 |              |                                                                                                                       |
 |              | `$ sudo systemctl stop apt-daily-upgrade.timer`                                                                          |
