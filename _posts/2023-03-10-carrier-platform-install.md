@@ -29,6 +29,56 @@ render_with_liquid: false
     * tcp - 3100, 5672, 8086
 - all daily updates that might trigger docker restart or termination should be disabled
 
+| Prerequisites                  |                                                                    |
+|--------------------------------|--------------------------------------------------------------------|
+| Instance launched with         | Hardware requirements with root permissions.                      |
+| Inbound ports                  | http – 80, ssh - 22, tcp - 3100, 5672, 8086                         |
+| Daily updates                  | All daily updates that might trigger docker restart or termination should be disabled. |
+
+| Carrier instance requirements: |                    |
+|--------------------------------|--------------------|
+| CPU                            | 4 (and more)        |
+| RAM                            | 16 GB (and more)    |
+| SSD                            | 100-500GB (root drive or mounted drive) |
+| IP address or DNS              | Static              |
+
+| Load generator:                |                    |
+|--------------------------------|--------------------|
+| CPU                            | 2 (and more)        |
+| RAM                            | 8 GB (and more)     |
+
+
+| Distribution | Instructions                                                                                                          |
+|--------------|-----------------------------------------------------------------------------------------------------------------------|
+| Ubuntu       | Check if you have any daily services enabled using the following command:                                          |
+|              | `sudo systemctl list-timers`                                                                                          |
+|              |                                                                                                                       |
+|              | The following services should be stopped/disabled: `apt-daily-upgrade.service`, `apt-daily.service`                    |
+|              |                                                                                                                       |
+|              | `sudo systemctl stop apt-daily-upgrade.timer`                                                                          |
+|              | `sudo systemctl disable apt-daily-upgrade.timer`                                                                       |
+|              | `sudo systemctl stop apt-daily.timer`                                                                                  |
+|              | `sudo systemctl disable apt-daily.timer`                                                                               |
+|              | `sudo systemctl daemon-reload`                                                                                         |
+|              |                                                                                                                       |
+|              | After disabling ensure that disabled services are not running anymore using the following command:                    |
+|              | `sudo systemctl list-timers`                                                                                          |
+| Debian       | The same as Ubuntu                                                                                                    |
+| Centos       | In the default Centos image, there shouldn't be any timer services enabled, but better to ensure using the command: |
+|              | `sudo systemctl list-timers`                                                                                          |
+|              |                                                                                                                       |
+|              | Disable timer services if required:                                                                                    |
+|              | `sudo systemctl stop $service_name`                                                                                    |
+|              | `sudo systemctl disable $service_name`                                                                                 |
+|              | `sudo systemctl daemon-reload`                                                                                         |
+| Fedora       | In the default Fedora image, there shouldn't be any timer services enabled, but better to ensure using the command: |
+|              | `sudo systemctl list-timers`                                                                                          |
+|              |                                                                                                                       |
+|              | Disable timer services if required:                                                                                    |
+|              | `sudo systemctl stop $service_name`                                                                                    |
+|              | `sudo systemctl disable $service_name`                                                                                 |
+|              | `sudo systemctl daemon-reload`                                                                                         |
+
 
 ## Videos
 
