@@ -1,3 +1,14 @@
+---
+layout: post
+title:  "Carrier Installation"
+image: ''
+date:   2023-04-10 05:05:05
+tags: [hardware,nfr, performance]
+description: 'lorem ipsum'
+categories: [arcade]
+---
+
+
 # Hardware requirements:
 ## OS: Ubuntu, Debian, Centos, Fedora
 ### Carrier instance requirements:
