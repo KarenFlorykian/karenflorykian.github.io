@@ -39,7 +39,7 @@ This tutorial will guide you how to write a post in the _Chirpy_ template, and i
 |--------------|-----------------------------------------------------------------------------------------------------------------------|
 | Ubuntu       | Check if you have any daily services enabled using the following command:                                          |
 |              | `$ sudo systemctl list-timers`                                                                                          |
-|              | ![img-description](https://karenflorykian.github.io/asssets/ubuntu_inst.png)                                                      |
+|              | ![img-description](https://karenflorykian.github.io/assets/ubuntu_inst.png)                                                      |
 |              | The following services should be stopped/disabled: `apt-daily-upgrade.service`, `apt-daily.service`                    |
 |              |                                                                                                                       |
 |              | `$ sudo systemctl stop apt-daily-upgrade.timer`                                                                          |
@@ -50,7 +50,9 @@ This tutorial will guide you how to write a post in the _Chirpy_ template, and i
 |              |                                                                                                                       |
 |              | After disabling ensure that disabled services are not running anymore using the following command:                    |
 |              | `$ sudo systemctl list-timers`                                                                                          |
-| Debian       | The same as Ubuntu                                                                                                    |
+|--------------|-----------------------------------------------------------------------------------------------------------------------|
+| Debian       | The same as Ubuntu    
+|--------------|-----------------------------------------------------------------------------------------------------------------------|                                                                                              
 | Centos       | In the default Centos image, there shouldn't be any timer services enabled, but better to ensure using the command: |
 |              | `$ sudo systemctl list-timers`                                                                                          |
 |              |                                                                                                                       |
@@ -58,6 +60,7 @@ This tutorial will guide you how to write a post in the _Chirpy_ template, and i
 |              | `$ sudo systemctl stop $service_name`                                                                                    |
 |              | `$ sudo systemctl disable $service_name`                                                                                 |
 |              | `$ sudo systemctl daemon-reload`                                                                                         |
+|--------------|-----------------------------------------------------------------------------------------------------------------------|
 | Fedora       | In the default Fedora image, there shouldn't be any timer services enabled, but better to ensure using the command: |
 |              | `$ sudo systemctl list-timers`                                                                                          |
 |              |                                                                                                                       |
