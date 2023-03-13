@@ -321,3 +321,138 @@ sudo su
 |----------|---------|
 | 4.1      | Get the list of all available partitions on your system with the following command:<br>`fdisk -l`<br><br>Make a new file system:<br>`mkfs -t ext4 /dev/nvme1n1`<br><br>Add information about new filesystem in file system table by editing /etc/fstab:<br>`vi /etc/fstab`<br><br>Add the following line in the end of the file:<br>`/dev/nvme1n1    /opt   ext4    defaults     0        2`<br><br>Mount required file system to existent /opt directory:<br>`mount /dev/nvme1n1 /opt` |
 | 4.2      | Mount docker to /opt folder<br>`cd /opt`<br><br>`mkdir docker`<br><br>`service docker stop`<br><br>`mount --rbind /opt/docker /var/lib/docker`<br><br>`service docker start` |
+
+
+4.2. Mount docker to /opt folder
+``` bash
+$ cd /opt
+$ mkdir docker
+$ service docker stop
+$ mount --rbind /opt/docker /var/lib/docker
+$ service docker start
+```
+5.	Install Git
+
+- Check if Git is installed using the following command:
+```bash
+git --version
+```
+
+- Otherwise install it:
+
+| OS      | Command              |
+|---------|----------------------|
+| Ubuntu  | sudo apt install git |
+| Debian  | sudo apt install git |
+| Centos  | sudo yum install git |
+| Fedora  | sudo dnf install git |
+
+
+6.	Clone carrier-io centry repository to /opt directory.
+```bash
+$ cd /opt
+$ git clone https://github.com/carrier-io/centry.git
+```
+7.	Switch to next branch in century repository.
+```bash
+cd centry
+git checkout next
+```
+8.	Get public IP of your system and set CURRENT_IP variable to defined value:
+
+| OS      | Command                                                                                             |
+|---------|-----------------------------------------------------------------------------------------------------|
+| Ubuntu  | CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com | grep 'address ' | cut -d ' ' -f 4)       |
+| Debian  | CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com | grep 'address ' | cut -d ' ' -f 4)       |
+| Centos  | yum install bind-utils && CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com | grep 'address ' | cut -d ' ' -f 4) |
+| Fedora  | dnf install bind-utils && CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com | grep 'address ' | cut -d ' ' -f 4) |
+
+
+9.	In .env file change DEV_IP to CURRENT_IP:
+```bash
+$ cd /opt/centry
+$ sed -i -e "s/\$DEV_IP/$CURRENT_IP/g" .env
+```
+10.	Launch Carrier installer:
+``` bash 
+docker-compose up -d
+```
+Installation process downloads all required images from docker hub, launches images and downloads all required plugins.
+Primary container is carrier-pylon. 
+Once carrier-pylon container is created:
+
+![img-description](https://karenflorykian.github.io/) 
+
+it is good to track installation process reading its logs using the following command:
+```bash
+$ docker logs -f carrier-pylon
+```
+ 
+
+Some connection errors might appear in the log as it tries to connect to rabbitmq while rabbit is not started yet. Due to the internal process of retry once rabbit is started errors will go away.
+
+During installation process carrier-pylon clones all required git repos with required plugins and install dependencies.
+
+Installation process takes ~5-10 minutes.  
+
+The following message indicates the end of installation process:
+UTC -     INFO - pylon.core.tools.server - Starting WSGI server
+
+11.	Once installation is finished open the following URL in browser:
+`http://< public DNS or IP>`
+
+You should see the following page that indicates successful installation of Carrier.
+ 
+
+
+12.	Login first time in the system using admin/admin credentials.
+
+How to create project in Carrier
+13.	Once you login you will see the following page that indicates that there are no projects created yet.
+ 
+
+14.	Click to the person logo in right top corner and select Administration to switch to Administration mode and create your first project:
+ 
+
+15.	Click to plus to add the project. 
+
+Set the name of your project and click Create.
+ 
+
+Your project is created. It might take ~1 minute. The process of project creation you can track in carrier-pylon logs to make sure that there are no any errors.
+
+16.	Once project is created you can get back to Project mode
+ 
+
+You will get to Project configuration page.
+
+ 
+
+17.	Now your project is setup and you can navigate to required sections either Performance or Security to start configuring tests using left menu in dropdown list.
+
+
+##  Troubleshooting
+
+If something doesn’t work as expected check logs of the following containers if there are some errors:
+```bash
+docker logs -f carrier-keycloak
+docker logs -f centry_traefik_1
+docker logs -f carrier-pylon-auth
+```
+
+##  Uninstall
+
+If root volume was used as hard drive then use the following commands to stop containers and all required artifacts.
+```bash
+docker-compose down
+docker volume prune
+docker network prune
+```
+
+If mounted disk was used then all directories with images should be deleted manually:
+```bash
+docker-compose down
+rm -f /opt/docker
+```
+
+
