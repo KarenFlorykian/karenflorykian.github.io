@@ -3,12 +3,15 @@ title: Carrier Installation
 author: karen
 date: 2023-04-08 12:00:00 +0100
 categories: [Blogging, Tutorial]
-tags: [system requirements, hardware, installation]
+tags: [writing]
 render_with_liquid: false
 ---
 
+> This tutorial will guide you how to instal Carrier platform.
 
 ## Hardware requirements:
+system_requirements, hardware, installation
+
 ### Carrier instance requirements:
 - 4 cpu (and more)
 - 16 GB RAM (and more)
