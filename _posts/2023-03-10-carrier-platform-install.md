@@ -51,7 +51,7 @@ render_with_liquid: false
 |--------------|-----------------------------------------------------------------------------------------------------------------------|
 | Ubuntu       | Check if you have any daily services enabled using the following command:                                          |
 |              | `$ sudo systemctl list-timers`                                                                                          |
-|              | ![img-description](https://karenflorykian.github.io/){: w="700" h="400" }                                                                                                                      |
+|              | ![img-description](https://karenflorykian.github.io/assets/img/ubuntu_inst.png)                                                                   |
 |              | The following services should be stopped/disabled: `apt-daily-upgrade.service`, `apt-daily.service`                    |
 |              |                                                                                                                       |
 |              | `$ sudo systemctl stop apt-daily-upgrade.timer`                                                                          |
@@ -62,6 +62,7 @@ render_with_liquid: false
 |              |                                                                                                                       |
 |              | After disabling ensure that disabled services are not running anymore using the following command:                    |
 |              | `$ sudo systemctl list-timers`                                                                                          |
+|--------------|-----------------------------------------------------------------------------------------------------------------------|
 | Debian       | The same as Ubuntu                                                                                                    |
 | Centos       | In the default Centos image, there shouldn't be any timer services enabled, but better to ensure using the command: |
 |              | `$ sudo systemctl list-timers`                                                                                          |
@@ -70,6 +71,7 @@ render_with_liquid: false
 |              | `$ sudo systemctl stop $service_name`                                                                                    |
 |              | `$ sudo systemctl disable $service_name`                                                                                 |
 |              | `$ sudo systemctl daemon-reload`                                                                                         |
+|--------------|-----------------------------------------------------------------------------------------------------------------------|
 | Fedora       | In the default Fedora image, there shouldn't be any timer services enabled, but better to ensure using the command: |
 |              | `$ sudo systemctl list-timers`                                                                                          |
 |              |                                                                                                                       |
@@ -85,12 +87,11 @@ render_with_liquid: false
 ```bash
 $ sudo systemctl list-timers
 ```
-
+![img-description](https://karenflorykian.github.io/assets/img/ubuntu_inst.png) 
 The following services should be stopped/disabled: apt-daily-upgrade.service, apt-daily.service
 
-
+![img-description](https://karenflorykian.github.io/assets/img/ununtu1_inst.png) 
 The following services should be stopped/disabled: apt-daily-upgrade.service, apt-daily.service
-
 
 ```bash
 $ sudo systemctl stop apt-daily-upgrade.timer
@@ -109,138 +110,95 @@ sudo su
 ```
 2.	Install docker
 
-Ubuntu	apt update
-```bash
-apt install docker.io -y
-```
-Debian	apt update
-```bash
-apt install docker.io -y
-```
-
-Centos	sudo yum install -y yum-utils
-```bash
-sudo yum-config-manager \
-    --add-repo \
-    https://download.docker.com/linux/centos/docker-ce.repo
-
-sudo yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-```
-Fedora	
-
-```bash
-$ sudo dnf -y install dnf-plugins-core
-
-$ sudo dnf config-manager \
---add-repo \
-https://download.docker.com/linux/fedora/docker-ce.repo
-
-
-$ sudo dnf install docker-ce docker-ce-cli containerd.io docker-compose-plugin
-```
+| Distro  | Update Command | Installation Commands |
+|---------|----------------|-----------------------|
+| Ubuntu  | `apt update`    | `apt install docker.io -y` |
+| Debian  | `apt update`    | `apt install docker.io -y` |
+| CentOS  | `sudo yum install -y yum-utils` | `sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo`<br> `sudo yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin` |
+| Fedora  | `sudo dnf -y install dnf-plugins-core` | `sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo`<br> `sudo dnf install docker-ce docker-ce-cli containerd.io docker-compose-plugin` |
 
 
 3.	Install docker-compose
 
-Ubuntu	apt install docker-compose
-
-Debian	apt install docker-compose
-
-Centos	Check the current release by the link https://github.com/docker/compose/releases and if necessary, update it in the command below:
-
-sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-
-sudo chmod +x /usr/local/bin/docker-compose
-
-Create a symbolic link for docker-compose in /usr/bin/docker-compose file:
-sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-
-Fedora	Check the current release by the link https://github.com/docker/compose/releases and if necessary, update it in the command below:
-
-sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-
-sudo chmod +x /usr/local/bin/docker-compose
-
-Create a symbolic link for docker-compose in /usr/bin/docker-compose file:
-   sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+| Distro  | Installation Commands |
+|---------|-----------------------|
+| Ubuntu  | `apt install docker-compose` |
+| Debian  | `apt install docker-compose` |
+| CentOS  | Check the current release by the link https://github.com/docker/compose/releases and if necessary, update it in the command below:<br><br> `sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose`<br><br>`sudo chmod +x /usr/local/bin/docker-compose`<br><br>Create a symbolic link for docker-compose in /usr/bin/docker-compose file:<br><br>`sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose` |
+| Fedora  | Check the current release by the link https://github.com/docker/compose/releases and if necessary, update it in the command below:<br><br> `sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose`<br><br>`sudo chmod +x /usr/local/bin/docker-compose`<br><br>Create a symbolic link for docker-compose in /usr/bin/docker-compose file:<br><br>`sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose` |
 
 
 4.	If hardware drive is not root drive, then mount disk to /opt directory.
-4.1. 
-•	Get the list of all available partitions on your system with the following command:
-fdisk -l
-Imagine partition name you should mount for Carrier usage is /dev/nvme1n1.
-• Make a new file system:
- mkfs -t ext4 /dev/nvme1n1
-• Add information about new filesystem in file system table by editing /etc/fstab:
-vi /etc/fstab
-Add the following line in the end of the file: 
-/dev/nvme1n1    /opt   ext4    defaults     0        2
-• Mount required file system to existent /opt directory:
-mount /dev/nvme1n1 /opt
+| Step No. | Command |
+|----------|---------|
+| 4.1      | Get the list of all available partitions on your system with the following command:<br>`fdisk -l`<br><br>Make a new file system:<br>`mkfs -t ext4 /dev/nvme1n1`<br><br>Add information about new filesystem in file system table by editing /etc/fstab:<br>`vi /etc/fstab`<br><br>Add the following line in the end of the file:<br>`/dev/nvme1n1    /opt   ext4    defaults     0        2`<br><br>Mount required file system to existent /opt directory:<br>`mount /dev/nvme1n1 /opt` |
+| 4.2      | Mount docker to /opt folder<br>`cd /opt`<br><br>`mkdir docker`<br><br>`service docker stop`<br><br>`mount --rbind /opt/docker /var/lib/docker`<br><br>`service docker start` |
+
 
 4.2. Mount docker to /opt folder
-cd /opt
-mkdir docker
-service docker stop
-mount --rbind /opt/docker /var/lib/docker
-service docker start
-
+``` bash
+$ cd /opt
+$ mkdir docker
+$ service docker stop
+$ mount --rbind /opt/docker /var/lib/docker
+$ service docker start
+```
 5.	Install Git
 
-Check if Git is installed using the following command:
+- Check if Git is installed using the following command:
+```bash
 git --version
+```
 
-Otherwise install it:
+- Otherwise install it:
 
-Ubuntu	sudo apt install git
-Debian	sudo apt install git
-Centos	sudo yum install git
-Fedora	sudo dnf install git
+| OS      | Command              |
+|---------|----------------------|
+| Ubuntu  | sudo apt install git |
+| Debian  | sudo apt install git |
+| Centos  | sudo yum install git |
+| Fedora  | sudo dnf install git |
+
 
 6.	Clone carrier-io centry repository to /opt directory.
-cd /opt
-git clone https://github.com/carrier-io/centry.git
-
+```bash
+$ cd /opt
+$ git clone https://github.com/carrier-io/centry.git
+```
 7.	Switch to next branch in century repository.
+```bash
 cd centry
 git checkout next
-
+```
 8.	Get public IP of your system and set CURRENT_IP variable to defined value:
 
-Ubuntu	CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com | grep 'address ' | cut -d ' ' -f 4)
-
-Debian	CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com | grep 'address ' | cut -d ' ' -f 4)
-
-Centos	Install host utility:
-yum install bind-utils
-
-Get IP and assign its value to CURRENT_IP variable:
-CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com | grep 'address ' | cut -d ' ' -f 4)
-
-Fedora	Install host utility:
-dnf install bind-utils
-
-Get IP and assign its value to CURRENT_IP variable:
-CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com | grep 'address ' | cut -d ' ' -f 4)
+| OS      | Command                                                                                             |
+|---------|-----------------------------------------------------------------------------------------------------|
+| Ubuntu  | CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com | grep 'address ' | cut -d ' ' -f 4)       |
+| Debian  | CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com | grep 'address ' | cut -d ' ' -f 4)       |
+| Centos  | yum install bind-utils && CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com | grep 'address ' | cut -d ' ' -f 4) |
+| Fedora  | dnf install bind-utils && CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com | grep 'address ' | cut -d ' ' -f 4) |
 
 
 9.	In .env file change DEV_IP to CURRENT_IP:
-
-cd /opt/centry
-sed -i -e "s/\$DEV_IP/$CURRENT_IP/g" .env
-
+```bash
+$ cd /opt/centry
+$ sed -i -e "s/\$DEV_IP/$CURRENT_IP/g" .env
+```
 10.	Launch Carrier installer:
+``` bash 
 docker-compose up -d
-
+```
 Installation process downloads all required images from docker hub, launches images and downloads all required plugins.
 Primary container is carrier-pylon. 
 Once carrier-pylon container is created:
- 
+
+![img-description](https://karenflorykian.github.io/) 
 
 it is good to track installation process reading its logs using the following command:
-docker logs -f carrier-pylon
-
+```bash
+$ docker logs -f carrier-pylon
+```
  
 
 Some connection errors might appear in the log as it tries to connect to rabbitmq while rabbit is not started yet. Due to the internal process of retry once rabbit is started errors will go away.
@@ -253,7 +211,7 @@ The following message indicates the end of installation process:
 UTC -     INFO - pylon.core.tools.server - Starting WSGI server
 
 11.	Once installation is finished open the following URL in browser:
-http://< public DNS or IP>
+`http://< public DNS or IP>`
 
 You should see the following page that indicates successful installation of Carrier.
  
@@ -284,31 +242,29 @@ You will get to Project configuration page.
 
 17.	Now your project is setup and you can navigate to required sections either Performance or Security to start configuring tests using left menu in dropdown list.
 
- 
 
- 
-
-
-
-Troubleshooting
+##  Troubleshooting
 
 If something doesn’t work as expected check logs of the following containers if there are some errors:
+```bash
 docker logs -f carrier-keycloak
 docker logs -f centry_traefik_1
 docker logs -f carrier-pylon-auth
+```
 
-
-Uninstall
+##  Uninstall
 
 If root volume was used as hard drive then use the following commands to stop containers and all required artifacts.
+```bash
 docker-compose down
 docker volume prune
 docker network prune
-
+```
 
 If mounted disk was used then all directories with images should be deleted manually:
+```bash
 docker-compose down
 rm -f /opt/docker
-
+```
 
 
