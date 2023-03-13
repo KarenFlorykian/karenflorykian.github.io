@@ -132,6 +132,7 @@ sudo su
 
 
 4.	If hardware drive is not root drive, then mount disk to /opt directory.
+
 | Step No. | Command |
 |----------|---------|
 | 4.1      | Get the list of all available partitions on your system with the following command:<br>`fdisk -l`<br><br>Make a new file system:<br>`mkfs -t ext4 /dev/nvme1n1`<br><br>Add information about new filesystem in file system table by editing /etc/fstab:<br>`vi /etc/fstab`<br><br>Add the following line in the end of the file:<br>`/dev/nvme1n1    /opt   ext4    defaults     0        2`<br><br>Mount required file system to existent /opt directory:<br>`mount /dev/nvme1n1 /opt` |
@@ -177,10 +178,10 @@ git checkout next
 
 | OS      | Command                                                                                             |
 |---------|-----------------------------------------------------------------------------------------------------|
-| Ubuntu  | CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com \| grep 'address ' \| cut -d ' ' -f 4)       |
-| Debian  | CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com \| grep 'address ' \| cut -d ' ' -f 4)       |
-| Centos  | yum install bind-utils && CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com \| grep 'address ' \| cut -d ' ' -f 4) |
-| Fedora  | dnf install bind-utils && CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com \| grep 'address ' \| cut -d ' ' -f 4) |
+| Ubuntu  | CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com `\|` grep 'address ' `\|` cut -d ' ' -f 4)       |
+| Debian  | CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com `\|` grep 'address ' `\|` cut -d ' ' -f 4)       |
+| Centos  | yum install bind-utils && CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com `\|` grep 'address ' `\|` cut -d ' ' -f 4) |
+| Fedora  | dnf install bind-utils && CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com `\|` grep 'address ' `\|` cut -d ' ' -f 4) |
 
 
 9.	In .env file change DEV_IP to CURRENT_IP:
