@@ -1,7 +1,7 @@
 ---
 title: Carrier Installation
-author: Karen
-date: 2023-04-13 14:10:00 +0800
+author: karen
+date: 2018-04-13 14:10:00 +0800
 categories: [Blogging, Tutorial]
 tags: [writing]
 render_with_liquid: false

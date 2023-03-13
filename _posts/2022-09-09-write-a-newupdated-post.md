@@ -1,6 +1,6 @@
 ---
 title: platform_temp
-author: Karen
+author: karen
 date: 2022-09-09 14:10:00 +0800
 categories: [Blogging, Tutorial]
 tags: [writing]
