@@ -178,9 +178,11 @@ git checkout next
 
 | OS      | Command                                                                                             |
 |---------|-----------------------------------------------------------------------------------------------------|
-| Ubuntu  | CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com `\|` grep 'address ' `\|` cut -d ' ' -f 4)       |
-| Debian  | CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com `\|` grep 'address ' `\|` cut -d ' ' -f 4)       |
-| Centos  | yum install bind-utils && CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com `\|` grep 'address ' `\|` cut -d ' ' -f 4) |
+| Ubuntu  | CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com `\\\|` grep 'address ' `\|` cut -d ' ' -f 4)       |
+| Debian  | CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com `\\\|` grep 'address ' 
+`\|` cut -d ' ' -f 4)       |
+| Centos  | yum install bind-utils && CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com 
+`\|` grep 'address ' `\|` cut -d ' ' -f 4) |
 | Fedora  | dnf install bind-utils && CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com `\|` grep 'address ' `\|` cut -d ' ' -f 4) |
 
 
