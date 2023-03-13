@@ -177,10 +177,10 @@ git checkout next
 
 | OS      | Command                                                                                             |
 |---------|-----------------------------------------------------------------------------------------------------|
-| Ubuntu  | CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com | grep 'address ' | cut -d ' ' -f 4)       |
-| Debian  | CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com | grep 'address ' | cut -d ' ' -f 4)       |
-| Centos  | yum install bind-utils && CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com | grep 'address ' | cut -d ' ' -f 4) |
-| Fedora  | dnf install bind-utils && CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com | grep 'address ' | cut -d ' ' -f 4) |
+| Ubuntu  | CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com \| grep 'address ' \| cut -d ' ' -f 4)       |
+| Debian  | CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com \| grep 'address ' \| cut -d ' ' -f 4)       |
+| Centos  | yum install bind-utils && CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com \| grep 'address ' \| cut -d ' ' -f 4) |
+| Fedora  | dnf install bind-utils && CURRENT_IP=$(host myip.opendns.com resolver1.opendns.com \| grep 'address ' \| cut -d ' ' -f 4) |
 
 
 9.	In .env file change DEV_IP to CURRENT_IP:
@@ -250,24 +250,24 @@ You will get to Project configuration page.
 
 If something doesn’t work as expected check logs of the following containers if there are some errors:
 ```bash
-docker logs -f carrier-keycloak
-docker logs -f centry_traefik_1
-docker logs -f carrier-pylon-auth
+$ docker logs -f carrier-keycloak
+$ docker logs -f centry_traefik_1
+$ docker logs -f carrier-pylon-auth
 ```
 
 ##  Uninstall
 
 If root volume was used as hard drive then use the following commands to stop containers and all required artifacts.
 ```bash
-docker-compose down
-docker volume prune
-docker network prune
+$ docker-compose down
+$ docker volume prune
+$ docker network prune
 ```
 
 If mounted disk was used then all directories with images should be deleted manually:
 ```bash
-docker-compose down
-rm -f /opt/docker
+$ docker-compose down
+$ rm -f /opt/docker
 ```
 
 
