@@ -1,5 +1,5 @@
 ---
-title: whatever test
+title: Mino test
 author: karen
 date: 2019-08-08 14:10:00 +0800
 categories: [Blogging, Tutorial]
@@ -46,7 +46,7 @@ The following table shows how to get the two parameters we need in a given video
 
 | Video URL                                                                                          | Platform  | ID            |
 |----------------------------------------------------------------------------------------------------|-----------|:--------------|
-| [https://www.**youtube**.com/watch?v=**H-B46URT4mg**](https://www.youtube.com/watch?v=H-B46URT4mg) | `youtube` | `H-B46URT4mg` |
+| [Karen](https://www.youtube.com/watch?v=bYwUF5pwRXQ) | `youtube` | `H-B46URT4mg` |
 | [https://www.**twitch**.tv/videos/**1634779211**](https://www.twitch.tv/videos/1634779211)         | `twitch`  | `1634779211`  |
 
 
